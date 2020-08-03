@@ -70,7 +70,7 @@ func (p *Parser) Parse() (*Entry, error) {
 	}
 
 	entry.path = path
-	entry.suffix = determineSuffix(entry.path)
+	entry.suffix = DetermineSuffix(entry.path)
 
 	tok, lit = p.scanIgnoreWhitespace()
 	for tok != EOF {
@@ -126,7 +126,8 @@ func isvalidOwner(owner string) bool {
 	return false
 }
 
-func determineSuffix(path string) PathSufix {
+// DetermineSuffix assings a sufix to a given path
+func DetermineSuffix(path string) PathSufix {
 	base := filepath.Base(path)
 	ext := filepath.Ext(path)
 

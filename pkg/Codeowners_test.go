@@ -162,6 +162,12 @@ func TestBuildFromFileWildCard(t *testing.T) {
 			},
 		},
 		{
+			input: "app/vendor/package.json",
+			expected: []string{
+				"@devs", "@b", "@a",
+			},
+		},
+		{
 			input: "app/vendor/hooli/middle_out.go",
 			expected: []string{
 				"@devs", "@a", "@c", "@richard",
@@ -188,6 +194,95 @@ func TestBuildFromFileWildCard(t *testing.T) {
 		}
 
 	}
+}
+
+func TestAddOwner(t *testing.T) {
+	co, err := BuildFromFile("fixtures/testCODEOWNERS_Example_Wildcard")
+	if err != nil {
+		t.Fatalf("expecting a non error")
+		t.FailNow()
+	}
+	testcases := []struct {
+		path      string
+		newOwners []string
+	}{
+		{
+			path: "app/lib/concurrency/file.php",
+			newOwners: []string{
+				"@tod", "@marria", "@scott",
+			},
+		},
+	}
+
+	for _, tc := range testcases {
+		co.AddOwner(tc.path, tc.newOwners...)
+		out := co.FindOwners(tc.path)
+		for _, newOwner := range tc.newOwners {
+			if !contains(newOwner, out...) {
+				t.Errorf("%s : expected new owners to have %v but did not", tc.path, newOwner)
+			}
+		}
+	}
+}
+
+func TestAddOwnerSuffixs(t *testing.T) {
+	co, err := BuildFromFile("fixtures/testCODEOWNERS_Example_Wildcard")
+	if err != nil {
+		t.Fatalf("expecting a non error")
+		t.FailNow()
+	}
+	testcases := []struct {
+		entryPath string
+		testPath  string
+		newOwners []string
+	}{
+		{
+			entryPath: "app/lib/concurrency/*",
+			testPath:  "app/lib/concurrency/fork.php",
+			newOwners: []string{
+				"@tod", "@marria", "@scott",
+			},
+		},
+		{
+			entryPath: "app/lib/concurrency/",
+			testPath:  "app/lib/concurrency/fork.php",
+			newOwners: []string{
+				"@tod", "@marria", "@scott",
+			},
+		},
+		{
+			entryPath: "app/lib/concurrency/",
+			testPath:  "app/lib/concurrency/tests/forktest.php",
+			newOwners: []string{
+				"@tod", "@marria", "@scott",
+			},
+		},
+		{
+			entryPath: "*.php",
+			testPath:  "app/lib/concurrency/fork.php",
+			newOwners: []string{
+				"@tod", "@marria", "@scott",
+			},
+		},
+	}
+
+	for _, tc := range testcases {
+		co.AddOwner(tc.entryPath, tc.newOwners...)
+		out := co.FindOwners(tc.testPath)
+		for _, newOwner := range tc.newOwners {
+			if !contains(newOwner, out...) {
+				t.Errorf(" entrypath: %s \n testpath: %s \n: expected new owners to have %v but did not", tc.entryPath, tc.testPath, newOwner)
+			}
+		}
+	}
+}
+func contains(str string, arr ...string) bool {
+	for _, a := range arr {
+		if a == str {
+			return true
+		}
+	}
+	return false
 }
 
 // borrowed from https://stackoverflow.com/questions/36000487/check-for-equality-on-slices-without-order

@@ -91,27 +91,9 @@ func createIndexFromEntries(entries []*Entry) (*CodeOwners, error) {
 	t := &CodeOwners{
 		trie.NewPathTrie(),
 	}
-	var n *node
-	var ok bool
 
 	for _, entry := range entries {
-		value := t.Get(entry.path)
-		if value == nil {
-			n = newNode()
-		} else {
-			n, ok = value.(*node)
-			if !ok {
-				out, _ := fmt.Printf("%v, %v", ok, n)
-				panic(out)
-			}
-		}
-
-		n.addEntry(entry)
-		path := entry.path
-		if []rune(path)[len(path)-1] == '/' {
-			path = path[:len(path)-1]
-		}
-		t.Put(path, n)
+		t.addOwnerByEntry(entry)
 	}
 
 	return t, nil
@@ -119,6 +101,36 @@ func createIndexFromEntries(entries []*Entry) (*CodeOwners, error) {
 
 func (n *node) addEntry(e *Entry) {
 	n.entries = append(n.entries, e)
+}
+
+func (t *CodeOwners) addOwnerByEntry(entry *Entry) {
+	var n *node
+	var ok bool
+	value := t.Get(entry.path)
+	if value == nil {
+		n = newNode()
+	} else {
+		n, ok = value.(*node)
+		if !ok {
+			out, _ := fmt.Printf("%v, %v", ok, n)
+			panic(out)
+		}
+	}
+
+	n.addEntry(entry)
+	path := entry.path
+	if []rune(path)[len(path)-1] == '/' {
+		path = path[:len(path)-1]
+	}
+	t.Put(path, n)
+}
+
+func (t *CodeOwners) AddOwner(path string, owners ...string) {
+	t.addOwnerByEntry(&Entry{
+		path:   path,
+		owners: owners,
+		suffix: DetermineSuffix(path),
+	})
 }
 
 // FindOwners ...
@@ -132,8 +144,8 @@ func (t *CodeOwners) FindOwners(path string) []string {
 		if !ok {
 			panic("Structure of the index is malformed")
 		}
-
 		for _, en := range n.entries {
+
 			if en.suffix == PathSufix(Recursive) || en.suffix == PathSufix(Absolute) {
 				owners = append(owners, en.owners...)
 			}
@@ -169,6 +181,25 @@ func (t *CodeOwners) FindOwners(path string) []string {
 		}
 	}
 	return removeDuplicatesUnordered(owners)
+}
+
+func (t *CodeOwners) Print() {
+	walker := func(key string, value interface{}) error {
+		if value == nil {
+			return nil
+		}
+		n, ok := value.(*node)
+		if !ok {
+			panic("Structure of the index is malformed")
+		}
+
+		for _, en := range n.entries {
+			fmt.Println(en)
+		}
+
+		return nil
+	}
+	t.Walk(walker)
 }
 
 func removeDuplicatesUnordered(elements []string) []string {
