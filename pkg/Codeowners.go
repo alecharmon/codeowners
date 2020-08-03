@@ -145,8 +145,7 @@ func (t *CodeOwners) FindOwners(path string) []string {
 			panic("Structure of the index is malformed")
 		}
 		for _, en := range n.entries {
-
-			if en.suffix == PathSufix(Recursive) || en.suffix == PathSufix(Absolute) {
+			if en.suffix == PathSufix(Recursive) || en.suffix == PathSufix(Absolute) || en.suffix == PathSufix(Flat) {
 				owners = append(owners, en.owners...)
 			}
 		}
