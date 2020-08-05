@@ -1,0 +1,16 @@
+{
+  "name": "codeowners",
+  "version": "1.0.10",
+  "description": "Golang module for reading and editing CODEOWNERS files",
+  "main": "main.go",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alecharmon/codeowners.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/alecharmon/codeowners/issues"
+  },
+  "homepage": "https://github.com/alecharmon/codeowners#readme"
+}
