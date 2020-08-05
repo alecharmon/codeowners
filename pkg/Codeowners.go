@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"path/filepath"
+	"sort"
 
 	"io"
 	"log"
@@ -235,6 +236,13 @@ func (t *CodeOwners) FindOwners(path string) []string {
 }
 
 func (t *CodeOwners) Print() {
+	var b bytes.Buffer
+	t.serialize(&b)
+	fmt.Print(b.String())
+}
+
+func (t *CodeOwners) serialize(b *bytes.Buffer) {
+	toSort := []string{}
 	walker := func(key string, value interface{}) error {
 		if value == nil {
 			return nil
@@ -245,12 +253,18 @@ func (t *CodeOwners) Print() {
 		}
 
 		for _, en := range n.entries {
-			fmt.Println(en)
+			if en.comment != "" {
+				toSort = append(toSort, fmt.Sprintf("%s %s #%s", en.path, strings.Join(en.owners, " "), en.comment))
+			}
+			toSort = append(toSort, fmt.Sprintf("%s %s", en.path, strings.Join(en.owners, " ")))
 		}
 
 		return nil
 	}
 	t.Walk(walker)
+	sort.Strings(toSort)
+
+	b.WriteString(strings.Join(toSort, "\n"))
 }
 
 func removeDuplicatesUnordered(elements []string) []string {

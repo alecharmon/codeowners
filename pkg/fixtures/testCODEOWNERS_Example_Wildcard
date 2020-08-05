@@ -1,16 +1,571 @@
-* @devs
+# https://help.github.com/articles/about-codeowners/
 
-app/ @a
-app/lib/ @b
-app/lib/network/ @c
+/.phan/ @knorton @smalone
+/app/lib/JSON/ @product/api
+/app/lib/MC/API/ @product/api
+/app/lib/MC/API20/ @product/api
+/app/lib/MC/API30/ @product/api
+/app/lib/MC/AccountsAPI/ @product/api
+/app/lib/MC/BulkSQL.php @matt-terwilliger @product/search-and-segmentation @product/performance
+/app/lib/MC/BulkSQL/ @matt-terwilliger @product/search-and-segmentation @product/performance
+/app/lib/MC/ChangeLog/ @product/search-and-segmentation
+/app/lib/MC/ErrorReporter.php @product/bugsnag-interest
+/app/lib/MC/ErrorReporter/ @product/bugsnag-interest
+/app/lib/MC/Kafka/ @product/search-and-segmentation
+/app/lib/MC/Search/ @product/search-and-segmentation
+/app/lib/MC/Segment/ @product/search-and-segmentation
+/app/lib/MC/UserMover/ @matt-terwilliger
+/app/lib/Profiler/ @product/performance
+/app/lib/Services/MCAdmin @product/support-tooling @mlettvin
+/app/lib/Services/StatsBot @product/support-tooling
+/app/lib/Swagger/ @product/api
+/batch/es/ @product/search-and-segmentation
+/batch/kafka/ @product/search-and-segmentation
+/batch/search/ @product/search-and-segmentation
+/data/api/ @product/api
+/data/api_schemas/ @product/api
+/data/database_schemas/ @product/data-delivery @product/data-management @product/dbeng @product/schema-changes
+/data/database_static_data/ @product/schema-changes
+/data/upgrade/ @product/dbeng
+/data/user_agent_info.ini @product/reviewers
+/tests/api20/ @product/api
+/tests/api30/ @product/api
+/tests_browser/ @athigpen @product/test-engineering @smalone @thamilton
+/vendor/ @aurban @dcloues @knorton @product/php-upgrade
+/vendor/rsg/avesta/ @amanda @aurban @cyoumans @dmann @hmorrison @jhunsucker @jhutcheson @knorton @mlettvin @mlewis @segorov
+/web/api/ @product/api
 
-app/vendor/* @b
-app/vendor/hooli/ @c
-app/vendor/hooli/middle_out.go @richard
+#
+# Abuse Prevention
+#
+app/controllers/Account/StatusController.php @product/ap-devs
+app/controllers/Peaches2/Tools/ComplianceTestingController.php @product/ap-devs
+app/controllers/Peaches2/Tools/IpBlockListController.php @product/ap-devs
+app/controllers/Peaches2/Tools/SmsSearchController.php @product/ap-devs
+app/controllers/Peaches2/Tools/TwilioController.php @product/ap-devs
+app/controllers/Peaches2/Tools/UserSearchController.php @product/ap-devs
+app/controllers/Peaches2/Users/AccountController.php @product/ap-devs
+app/controllers/Peaches2/Users/CampaignsController.php @product/ap-devs
+app/controllers/Peaches2/Users/ComplianceController.php @product/ap-devs
+app/controllers/Peaches2/Users/ReviewToolsController.php @product/ap-devs
+app/controllers/Peaches2/Review/UsersController.php @product/ap-devs
+app/controllers/ReportsController.php @product/ap-devs
+app/controllers/SecurityController.php @product/ap-devs
+app/controllers/SignupController.php @product/ap-devs
+app/controllers/_domains/crowd/IndexController.php @product/ap-devs
+app/controllers/_domains/crowd/ReviewController.php @product/ap-devs
+app/lib/MC/Account/Closer.php @product/ap-devs
+app/lib/MC/Account/EmailChallenge.php @product/ap-devs
+app/lib/MC/Activator.php @product/ap-devs
+app/lib/MC/CampaignCrowd.php @product/ap-devs
+app/lib/MC/Compliance.php @product/ap-devs
+app/lib/MC/Compliance @product/ap-devs
+app/lib/MC/CreditScore.php @product/ap-devs
+app/lib/MC/CreditScore @product/ap-devs
+app/lib/MC/CreditScoreClient.php @product/ap-devs
+app/lib/MC/Crowd @product/ap-devs
+app/lib/MC/Job/AdminClose.php @product/ap-devs
+app/lib/MC/Job/BulkAdminClose.php @product/ap-devs
+app/lib/MC/Job/CampaignCrowd.php @product/ap-devs
+app/lib/MC/Job/CheckLandingPageCompliance.php @product/ap-devs
+app/lib/MC/Job/ComplianceOfficerCheckPolicies.php @product/ap-devs
+app/lib/MC/Job/CrowdSendCampaign.php @product/ap-devs
+app/lib/MC/Job/Dormancy @product/ap-devs
+app/lib/MC/Job/ScanRedirects.php @product/ap-devs
+app/lib/MC/Job/SendListConfirmEmail.php @product/ap-devs
+app/lib/MC/Job/SendListFormEmail.php @product/ap-devs
+app/lib/MC/Job/SendListGoodbyeEmail.php @product/ap-devs
+app/lib/MC/Job/SendListWelcomeEmail.php @product/ap-devs
+app/lib/MC/List/Import @product/ap-devs
+app/lib/MC/ListForm.php @product/ap-devs
+app/lib/MC/ListForm @product/ap-devs
+app/lib/MC/Login/Cookie @product/ap-devs
+app/lib/MC/Reputation.php @product/ap-devs
+app/lib/MC/Reputation/Client.php @product/ap-devs
+app/lib/MC/Service/Crowd.php @product/ap-devs
+app/lib/MC/Service/Crowd @product/ap-devs
+app/lib/MC/Service/CrowdFactory.php @product/ap-devs
+app/lib/MC/UserMaintenance @product/ap-devs
+app/lib/MC/ValidateUrls.php @product/ap-devs
+app/lib/MC/Zendesk @product/ap-devs
+app/lib/OAuth2Client.php @product/ap-devs
+app/lib/Zendesk @product/ap-devs
+app/models/Campaign/Automation/DailyStat.php @product/ap-devs
+app/models/Campaign/Crowd.php @product/ap-devs
+app/models/Campaign/CrowdPolicyResult.php @product/ap-devs
+app/models/Campaign/DeliveryTest.php @product/ap-devs
+app/models/Campaign/EgpPrediction.php @product/ap-devs
+app/models/Campaign/Inspection.php @product/ap-devs
+app/models/Campaign/ProductRecSent.php @product/ap-devs
+app/models/Campaign/Stats.php @product/ap-devs
+app/models/Campaign/Stats/Timeseries.php @product/ap-devs
+app/models/MCAdmin/Tools/BlockedIp.php @product/ap-devs
+app/models/User/Compliance.php @product/ap-devs
+app/models/User/Security.php @product/ap-devs
+app/models/User/Vetting.php @product/ap-devs
+app/models/UserDormantNotification.php @product/ap-devs
+batch/force_webhost_pw_reset.php @product/ap-devs
+batch/process_crowd_jobs.php @product/ap-devs
+batch/process_crowd_timeouts.php @product/ap-devs
+batch/run_once/compliance @product/ap-devs
+batch/usermaintenance @product/ap-devs
+data/crowd_htpass @product/ap-devs
+data/database_schemas/crowd.yaml @product/ap-devs
+data/email_templates/account_dormant_notification @product/ap-devs
+data/email_templates/bad_campaigns @product/ap-devs
+data/email_templates/mcadmin/compliance_block_reason/email.txt @product/ap-devs
+tests/2fa/test_authy_phonechallenge.php @product/ap-devs
+tests/abuse @product/ap-devs
+tests/app/lib/MC/compliance @product/ap-devs
+tests/app/lib/MC/service/test_crowd.php @product/ap-devs
+tests/app/lib/MC/test_Utils.php @product/ap-devs
+tests/app/lib/MC/test_compliance.php @product/ap-devs
+tests/app/lib/MC/test_recaptcha.php @product/ap-devs
+tests/app/lib/mc/compliance @product/ap-devs
+tests/app/lib/mc/service/crowd @product/ap-devs
+tests/app/lib/mc/service/test_crowd.php @product/ap-devs
+tests/app/lib/mc/test_compliance.php @product/ap-devs
+tests/automation/test_el_camino.php @product/ap-devs
+tests/automation/test_next_send_times.php @product/ap-devs
+tests/automation/test_sending.php @product/ap-devs
+tests/automation/test_template_switch.php @product/ap-devs
+tests/campaigns/test_egp.php @product/ap-devs
+tests/compliance/test_check_policies.php @product/ap-devs
+tests/compliance/test_compliance_logging.php @product/ap-devs
+tests/compliance/test_mc_crowdappapi.php @product/ap-devs
+tests/compliance/test_tx_review.php @product/ap-devs
+tests/compliance/vetting/mock_EHawk.php @product/ap-devs
+tests/compliance/vetting/test_ehawk.php @product/ap-devs
+tests/compliance/vetting/test_ehawk_response_handling.php @product/ap-devs
+tests/crowd/test_crowd.php @product/ap-devs
+tests/ecommerce/test_ecomm_optin.php @product/ap-devs
+tests/jobs/MC/Job/test_ScanRedirects.php @product/ap-devs
+tests/mc/crowd @product/ap-devs
+tests/mc/usermaintenance @product/ap-devs
+tests/unit/MC/Compliance @product/ap-devs
+tests/unit/MC/Job/test_ComplianceOfficerCheckPolicies.php @product/ap-devs
+tests/unit/MC/Job/test_SendListConfirmEmail.php @product/ap-devs
+tests/unit/MC/Job/test_SendListGoodbyeEmail.php @product/ap-devs
+tests/unit/MC/Job/test_SendListWelcomeEmail.php @product/ap-devs
+tests/unit/MC/Login/Cookie @product/ap-devs
+tests/unit/MC/Service/Crowd @product/ap-devs
+tests/unit/MC/Service/test_Crowd.php @product/ap-devs
+tests/unit/MC/test_ListForm.php @product/ap-devs
+tests/unit/models/Campaign/test_Crowd.php @product/ap-devs
+tests/unit/models/User/test_Security.php @product/ap-devs
+tests/unit/models/User/test_global_db_known_entity.php @product/ap-devs
+tests/zendesk @product/ap-devs
 
-README @legal
+#
+# Security Team
+#
+/batch/security/ @product/security
+/script/security/ @product/security
+/app/lib/Oauth* @product/security
+/app/models/User/Security.php @product/security
+/app/controllers/SecurityController.php @product/security
+/app/lib/MC/AuthAdapter/ @product/security
+/app/lib/MC/Authy/ @product/security
+/app/lib/MC/Ephemera/ @product/security
+/app/lib/MC/OAuth2/ @product/security
+/app/lib/MC/Security/ @product/security
 
-*.js @frontend
+#
+#  Ads Team
+#
+/app/controllers/Ads @product/ads
+/app/controllers/AdsController.php @product/ads
+/app/lib/MC/Job/Ad/ @product/ads
+/app/models/AdInterface.php @product/ads
+/app/models/Ad/ @product/ads
+/web/js/mojo/widgets/ads/ @product/ads
+/app/views/default/ads @product/ads
 
-app/vendor/hooli/index.js @mike
-app/vendor/hooli/index.react.js @mike
+#
+#  Monetization Domain
+#
+/app/controllers/AccountController.php @product/monetization
+/app/controllers/Account/AddonsController.php @product/monetization
+/app/controllers/Account/AdjustPlanController.php @product/monetization
+/app/controllers/Account/BillingController.php @product/monetization
+/app/controllers/Account/BuyModuleController.php @product/monetization
+/app/controllers/Account/ChaseGatewayController.php @product/monetization
+/app/controllers/Account/DowngradePlanController.php @product/monetization
+/app/controllers/Account/FeaturesReviewController.php @product/monetization
+/app/controllers/Account/PaywallController.php @product/monetization
+/app/controllers/Account/ProfileController.php @product/monetization
+/app/controllers/Account/PromotionsController.php @product/monetization
+/app/controllers/Account/StatusController.php @product/monetization
+/app/controllers/Peaches2/Users/BillingController.php @product/monetization
+/app/lib/BrainTree.php @product/monetization
+/app/lib/BrainTree/ @product/monetization
+/app/lib/MC/Adyen/ @product/monetization
+/app/lib/MC/BatchBilling.php @product/monetization
+/app/lib/MC/Biller.php @product/monetization
+/app/lib/MC/Billing/ @product/monetization
+/app/lib/MC/BrainTree.php @product/monetization
+/app/lib/MC/BrainTree/ @product/monetization
+/app/lib/MC/Chase/ @product/monetization
+/app/lib/MC/CurrencyExchange/ @product/monetization
+/app/lib/MC/Package/ @product/monetization
+/app/lib/MC/Service/Billing/ @product/monetization
+/app/lib/MC/SmartyStreets/ @product/monetization
+/app/lib/MC/Tax/ @product/monetization
+/app/lib/MC/ThomsonReuters/ @product/monetization
+/app/lib/Payment @product/monetization
+/app/models/CurrencyExchange.php @product/monetization
+/app/models/Financial.php @product/monetization
+/app/models/MonthlyPlan/ @product/monetization
+/app/models/Module.php @product/monetization
+/app/models/Module/ @product/monetization
+/app/models/Paygo/ @product/monetization
+/app/models/Pricing/ @product/monetization
+/app/models/User/Billing.php @product/monetization
+/app/models/User/Billing/ @product/monetization
+/app/models/User/Credits.php @product/monetization
+/app/models/User/Defaults.php @product/monetization
+/app/models/User/Module.php @product/monetization
+/app/models/User/Order* @product/monetization
+/app/models/User/Order/ @product/monetization
+/app/models/User/Package.php @product/monetization
+/app/models/User/PaidFeature.php @product/monetization
+/app/models/User/PaidFeature/ @product/monetization
+/app/models/User/PaygSettings.php @product/monetization
+/app/models/User/PlanUpdate.php @product/monetization
+/app/models/User/PlanUpdate/ @product/monetization
+/app/models/User/PricingAdapter.php @product/monetization
+/app/models/User/Reward.php @product/monetization
+/app/views/default/billing* @product/monetization
+/app/views/default/billing/ @product/monetization
+/app/lib/MC/Adyen/ @product/monetization
+/app/lib/MC/PlanService.php @product/monetization
+/app/lib/MC/PlanService/ @product/monetization
+/app/views/default/account/billing/ @product/monetization
+/app/views/default/contact-billing-modal.html @product/monetization @product/content-delivery
+/batch/monthly_payments.php @product/monetization
+/batch/pull_exchange_rate.php @product/monetization
+/data/database_static_data/discount_types.json @product/monetization @alec-harmon
+/data/database_static_data/monthly_plans.json @product/monetization @product/content-delivery
+/data/database_static_data/order_types.json @product/monetization @product/content-delivery
+/data/database_static_data/vat_rates.json @product/monetization @product/content-delivery
+/data/package_pricing/ @product/monetization @product/content-delivery
+/data/packages/ @product/monetization @product/content-delivery
+/tests/invoicing/ @product/monetization
+/tests/payment_processing/ @product/monetization
+/web/js/mojo/PaymentFormUtils.js @product/monetization
+/web/js/mojo/app/account/billing.js @product/monetization
+/web/js/mojo/app/account/paypal.js @product/monetization
+/web/js/mojo/widgets/PaymentForm* @product/monetization
+/web/js/mojo/widgets/_ChaseHostedPayments.js @product/monetization
+/web/js/mojo/widgets/account/paywall/ @product/monetization
+/web/js/mojo/widgets/templates/PaymentForm.html @product/monetization
+/app/lib/MC/Account/Promotions/ @product/monetization
+/app/controllers/Peaches2/Tools/DiscountsController.php @product/monetization
+/web/js/src/MCAdmin/Tools/Discounts/ @product/monetization
+
+#
+# Engineering Experience
+#
+/script/ @product/eng-enablement-dev
+/Vagrantfile @product/eng-enablement-dev
+
+#
+# Front-end Platform
+#
+
+/web/js/src/@mc @product/front-end-platform
+/web/js/src/@mc/api @product/react-reviewers
+/web-config/ @product/front-end-platform
+/node_modules/ @product/front-end-platform
+/package.json @product/front-end-platform
+/package-lock.json @product/front-end-platform
+/.babelrc @product/front-end-platform
+/.eslintignore @product/front-end-platform
+/.eslintrc @product/front-end-platform
+/.npmrc @product/front-end-platform
+/.prettierignore @product/front-end-platform
+/.stylelintrc.json @product/front-end-platform
+/web/js/src/.eslintrc.js @product/front-end-platform
+/web/js/src/jsconfig.json @product/front-end-platform
+/web/js/src/package.json @product/front-end-platform
+/web/js/src/package-lock.json @product/front-end-platform
+/web/js/src/@mc/wink @product/react-reviewers @product/wink-eng
+/web/js/src/Main/index.js @product/single-page-app-eng
+/web/js/src/Main/routes.js @product/single-page-app-eng
+/web/js/src/Main/core @product/single-page-app-eng
+/web/js/src/@mc/router @product/single-page-app-eng
+
+# Email Team
+#
+/data/email_templates/ @product/email
+/data/templates/ @product/email
+/app/lib/MC/Email/ @product/email
+
+#
+# Start with Mailchimp team
+#
+/app/lib/Batch/BrandedBundle/ @product/start-with-mailchimp
+/app/lib/MC/BrandedBundle/ @product/start-with-mailchimp
+/app/lib/MC/Job/BrandedBundle/ @product/start-with-mailchimp
+/app/lib/MC/BrandedDomains/ @product/start-with-mailchimp
+/app/lib/MC/Pages/ @product/start-with-mailchimp
+/app/lib/Ecommerce/Platforms/Square/ @product/start-with-mailchimp
+/app/lib/MC/Account/Promotions/FreeDomain.php @product/start-with-mailchimp
+
+#
+# Content Delivery Team
+#
+/app/controllers/_domains/plums @product/content-delivery
+/app/controllers/KbApiController.php @product/content-delivery @product/technical-content
+/app/lib/Plums/ @product/content-delivery @product/technical-content
+/app/lib/Batch/Util/Plums/ @product/content-delivery
+/app/views/default/plums/ @product/content-delivery @product/technical-content
+/app/views/default/kb-api/ @product/content-delivery @product/technical-content
+/data/plums/ @product/content-delivery
+/web/_domains/plums/ @product/content-delivery
+/tests/unit/Plums/ @product/content-delivery
+/tests/controllers/test_KbApiController.php @product/content-delivery @product/technical-content
+
+#
+# Integrations Team
+#
+app/lib/Ecommerce/Compliance @product/integrations
+app/lib/MC/Job/GDPR @product/integrations
+app/controllers/Ecommerce @product/integrations
+batch/ecommerce/forget_store.php @product/integrations
+
+#
+# Partnerships Team (formerly Partner Experience)
+#
+/app/controllers/PartnersController.php @product/partnerships
+/app/controllers/ExpertsController.php @product/partnerships
+/app/controllers/AcademyController.php @product/partnerships
+/app/controllers/Partners/ @product/partnerships
+/app/lib/PartnerPlatform/Center/ @product/partnerships
+/app/lib/Partners/ @product/partnerships
+/app/lib/Batch/Partners/ @product/partnerships
+/app/lib/MC/Job/Partners/ @product/partnerships
+/batch/partners @product/partnerships
+/tests/batch/partners/ @product/partnerships
+/tests/controllers/partners/ @product/partnerships
+/tests/partnerplatform/ @product/partnerships
+/web/js/src/PartnerCenter/ @product/partnerships @product/react-reviewers
+/web/js/src/Experts/ @product/partnerships @product/react-reviewers
+/app/lib-grpc/Partnerprogram/ @product/partnerships
+/app/lib-grpc/partnerprogram.proto @product/partnerships
+/app/lib-grpc/GPBMetadata/Partnerprogram.php @product/partnerships
+/app/models/Agency/Account.php @product/partnerships
+/app/models/Agency/Login.php @product/partnerships
+/app/lib/Services/StatsBot/Stat/Partnerships/ @product/partnerships
+
+#
+# Navigation
+app/lib/MC/AppNavigation/ @product/front-end-platform @product/pdx-dne
+web/js/src/@mc/components/MainNav @product/pdx-dne
+
+#
+# New User Journey team — Various signup, setup, and onboarding sections of the codebase
+#
+
+## Signup + Setup
+/app/controllers/Signup/ @product/pdx-nuj
+/app/controllers/SignupController.php @product/pdx-nuj
+/app/controllers/_domains/login/SignupController.php @product/pdx-nuj
+/app/lib/Signup/ @product/pdx-nuj
+/app/views/default/signup/ @product/pdx-nuj
+/web/css/less/fragments/signup.less @product/pdx-nuj
+/web/js/mojo/widgets/self-segmentation/ @product/pdx-nuj
+/web/js/mojo/views/signup/ @product/pdx-nuj
+
+## Dashboard
+/app/controllers/IndexController.php @product/pdx-nuj
+/app/controllers/OnboardingDashboardController.php @product/pdx-nuj
+/app/lib/Dashboard/TemplatePicker.php @product/pdx-nuj
+/app/lib/MC/OnboardingDashboardCookie.php @product/pdx-nuj
+/web/js/src/@mc/api/OnboardingDashboard.js @product/pdx-nuj
+/web/js/src/OnboardingDashboard/ @product/pdx-nuj
+/app/views/default/index/ @product/pdx-nuj
+
+## Login (Keeping a narrow scope for now)
+/app/views/default/global/login.html @product/pdx-nuj
+/web/js/mojo/views/login/ @product/pdx-nuj
+/web/js/mojo/views/index/ @product/pdx-nuj
+
+#
+# Support Tooling
+#
+app/lib/Services/MCAdmin/Permissions.php @product/support-tooling
+data/mcadmin/navigation/ @product/support-tooling
+
+#
+# CRM Infrastructure
+#
+/app/models/Contact.php @product/crm-infra
+/app/models/Contact/ @product/crm-infra
+/app/models/List/Email.php @product/crm-infra
+/app/models/List/Email/Info.php @product/crm-infra
+/app/models/List/Merge.php @product/crm-infra
+/app/models/List/InterestGroup.php @product/crm-infra
+/app/models/List/InterestGrouping.php @product/crm-infra
+/app/models/MemberList.php @product/crm-infra
+/app/lib/MC/Contacts/ @product/crm-infra
+
+#
+# Neapolitan
+#
+/web/js/mojo/neapolitan/ @product/neapolitan
+/web/js/mojo/views/campaigns/wizard/neapolitan/ @product/neapolitan
+/app/controllers/Campaigns/Wizard/NeapolitanController.php @product/neapolitan
+/app/views/default/campaigns/wizard/neapolitan/index.html @product/neapolitan
+
+#
+# Channels
+#
+/web/js/mojo/widgets/ContentManager.js @carson-covell
+
+#
+# Channels Editing Platform
+#
+/web/js/src/@mc/editing @product/channels-editing
+/web/js/src/EditingPlatformExperience @product/channels-editing
+/web/js/src/EditingPlatformPlayground @product/channels-editing
+/web/js/src/StarterPagePlayground @product/channels-editing
+/web/js/src/EditingPlatformPreview @product/channels-editing
+/web/js/src/EmailEditor @product/channels-editing
+/web/js/src/BrandedDomainsStarterPage @product/channels-editing
+/web/js/src/WebsiteSectionsPlayground @product/channels-editing
+
+#
+# Channels Websites
+#
+# Front-end
+/web/js/src/Website @product/channels-websites
+/web/js/src/WebsiteDashboard @product/channels-websites
+/web/js/src/WebsitePagesEditor @product/channels-websites
+/web/js/src/StartYourSite @product/channels-websites
+#
+# Backend
+/app/controllers/WebsiteController.php @product/channels-websites
+/app/controllers/Websites/DashboardController.php @product/channels-websites
+/app/controllers/Websites/StartYourSiteController.php @product/channels-websites
+/app/models/Website.php @product/channels-websites
+/app/models/Page.php @product/channels-websites
+/app/models/NavigationSetting.php @product/channels-websites
+/app/lib/MC/NavigationWidget @product/channels-websites
+/app/lib/Page @product/channels-websites
+/app/lib/MC/Pages @product/channels-websites
+/app/lib/Website @product/channels-websites
+/app/lib/MC/Websites @product/channels-websites
+
+#
+# Email Editor
+#
+# Front-end
+/web/js/src/EmailEditor @product/email-editor
+#
+# Back-end
+app/controllers/Email/EditorController.php @product/email-editor
+app/lib/MC/EditingPlatform/Eligibility.php @product/email-editor
+
+#
+# Automation Squad
+#
+/web/js/src/AutomationsBuilder @product/automation
+/app/controllers/AutomationsController.php @product/automation
+/app/controllers/Campaigns/Wizard/AutomationController.php @product/automation
+/app/controllers/AutomationsBuilderController.php @product/automation
+/app/lib/Automation @product/automation
+/app/models/Campaign/Automation.php @product/automation
+/app/models/Campaign/Automation/Trigger.php @product/automation
+/app/models/Campaign/Automation/Setting.php @product/automation
+/app/models/Automations @product/automation
+/app/controllers/AutomationsStudioController.php @product/automation
+/app/lib/MC/API30/RequestModels/AutomationsV2 @product/automation
+/app/lib/MC/API30/ResourceController/AutomationsV2 @product/automation
+/app/lib/MC/API30/ResponseModels/AutomationsV2 @product/automation
+
+#
+# Analytics & Data Science - Mylar
+#
+/app/lib/MC/Ecommerce/ProductRec.php @product/data-science-mylar
+/app/lib/MC/Ecommerce/ProductRec @product/data-science-mylar
+/app/lib/MC/Job/StoreProductRecsSync.php @product/data-science-mylar
+/app/models/List/Email/ProductRecs.php @product/data-science-mylar
+/app/models/Campaign/ProductRecSent.php @product/data-science-mylar
+/app/lib/MC/Ecommerce/ProductRec/ProductRecService.php @product/data-science-mylar
+/tests/app/lib/MC/Ecommerce/test_product_rec_service.php @product/data-science-mylar
+/app/lib/DataServiceFabric/ProductRecommendationsInvoker.php @product/data-science-mylar
+/tests/app/lib/DataServiceFabric/test_product_recommendations_invoker.php @product/data-science-mylar
+
+/web/js/mojo/neapolitan/models/blocks/ProductRec.js @product/data-science-mylar
+/web/js/mojo/neapolitan/editors/blocks/ProductEditorMobile.js @product/data-science-mylar
+/web/js/mojo/neapolitan/editors/blocks/ProductEditor.js @product/data-science-mylar
+
+/web/js/src/Reports/Benchmarking @product/data-science-mylar
+
+/web/js/mojo/views/campaigns/subject-research.js @product/data-science-mylar
+/web/js/mojo/widgets/checklist-editor/items/templates/subject_with_feedback.html @product/data-science-mylar
+/web/js/mojo/widgets/checklist-editor/items/SubjectCriteriaList.js @product/data-science-mylar
+/web/js/mojo/widgets/checklist-editor/items/templates/subject-criteria-list.html @product/data-science-mylar
+/web/js/mojo/widgets/checklist-editor/items/SubjectCriteriaList.js @product/data-science-mylar
+/web/js/mojo/widgets/checklist-editor/items/templates/subjectDialog.html @product/data-science-mylar
+/web/js/mojo/widgets/checklist-editor/items/SubjectDialog.js @product/data-science-mylar
+
+#
+#  Commerce
+#
+/app/controllers/Ecommerce @product/commerce-back-end
+/app/controllers/StoresController.php @product/commerce-front-end
+/app/lib/Ecommerce @product/commerce-back-end
+/app/lib/MC/API30/ResourceController/ExperimentalEcommerce @product/commerce-back-end
+/app/lib/MC/API30/ResponseModels/Ecommerce @product/commerce-back-end
+/app/lib/MC/API30/RequestModels/Store @product/commerce-back-end
+/app/models/Ecommerce @product/commerce-back-end
+/batch/ecommerce @product/commerce-back-end
+/tests/api30/requests/ecommerce @product/commerce-back-end
+/tests/ecommerce @product/commerce-back-end
+/web/js/src/Stores @product/commerce-front-end
+
+#
+#  Transactional (aka Mandrill) Product Dev
+#
+/app/controllers/TransactionalController.php @product/tx-product-dev
+/app/models/MCTx.php @product/tx-product-dev
+/app/views/default/transactional @product/tx-product-dev
+
+#
+# Unit Testing Engineering Working Group
+#
+/tests_experimental @product/unit-testing-wg
+
+#
+# Test Engineering / mcqa-test-engineering
+#
+/app/lib/MC/AutomatedTestingAPI @product/test-eng
+/app/lib/MC/API30/Server/Middleware/CheckAutomatedTestingAPIKeyValid.php @product/test-eng
+/tests/automatedtestingapi @product/test-eng
+/app/controllers/Peaches2/Users/QatoolsController.php @product/test-eng
+/app/lib/Batch/Util/DevUserExport.php @product/test-eng
+
+#
+#Front Door
+#
+web/js/mojo/widgets/templates/MarketingHero.html @product/pdx-dne
+web/js/mojo/widgets/MarketingHero.js @product/pdx-dne
+web/js/mojo/intentOverlay.js @product/pdx-dne
+data/dojo/mojo/intent-overlay/templates/IntentOverlay.html @product/pdx-dne
+
+#
+#Mobile Web
+#
+/web/js/src/MobileLandingPagesEditor @product/mobile-web
+/web/js/src/@mc/editing/mobile @product/mobile-web
+
+#
+# Metaaaaaaaaa
+#
+# Basically we need this to ensure that some codeowners
+# coverage is not accidentally borked by a new rule
+# taking precidence.
+#
+/.github/CODEOWNERS @product/codeowners-changes

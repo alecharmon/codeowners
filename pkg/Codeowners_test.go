@@ -351,6 +351,15 @@ func TestReplaceOwner(t *testing.T) {
 	}
 }
 
+func TestPrint(t *testing.T) {
+	co, err := BuildFromFile("fixtures/testCODEOWNERS_Example_Wildcard")
+	if err != nil {
+		t.Fatalf("expecting a non error")
+		t.FailNow()
+	}
+	co.Print()
+}
+
 func contains(str string, arr ...string) bool {
 	for _, a := range arr {
 		if a == str {
