@@ -1,6 +1,6 @@
 {
   "name": "codeowners",
-  "version": "1.0.10",
+  "version": "1.0.11",
   "description": "Golang module for reading and editing CODEOWNERS files",
   "main": "main.go",
   "repository": {
