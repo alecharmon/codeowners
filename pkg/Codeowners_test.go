@@ -276,6 +276,81 @@ func TestAddOwnerSuffixs(t *testing.T) {
 		}
 	}
 }
+
+func TestRemoveOwner(t *testing.T) {
+	co, err := BuildFromFile("fixtures/testCODEOWNERS_Example_Wildcard")
+	if err != nil {
+		t.Fatalf("expecting a non error")
+		t.FailNow()
+	}
+	foo := co.FindOwners("app/lib/network/foo.php")
+	if sameStringSlice(foo, []string{"@a", "@b", "@c"}) {
+		t.Errorf("not expected owners for foo.php")
+	}
+	co.RemoveOwner("@c")
+	foo = co.FindOwners("app/lib/network/foo.php")
+	if sameStringSlice(foo, []string{"@a", "@b"}) {
+		t.Errorf("not expected owners for foo.php")
+	}
+
+	foo = co.FindOwners("/app/vendor/hooli/middle_out.go")
+	if sameStringSlice(foo, []string{"@devs"}) {
+		t.Errorf("not expected owners for foo.php")
+	}
+}
+
+func TestRemovePath(t *testing.T) {
+	co, err := BuildFromFile("fixtures/testCODEOWNERS_Example_Wildcard")
+	if err != nil {
+		t.Fatalf("expecting a non error")
+		t.FailNow()
+	}
+
+	foo := co.FindOwners("app/vendor/hooli/middle_out.go")
+
+	if !sameStringSlice(foo, []string{"@a", "@c", "@richard", "@devs"}) {
+		t.Errorf("not expected owners for foo.php %v", foo)
+	}
+
+	co.RemovePath("app/vendor/hooli/middle_out.go")
+	foo = co.FindOwners("app/vendor/hooli/middle_out.go")
+	if !sameStringSlice(foo, []string{"@a", "@c", "@devs"}) {
+		t.Errorf("not expected owners for foo.php %v", foo)
+	}
+
+	co.RemovePath("*")
+	foo = co.FindOwners("app/vendor/hooli/middle_out.go")
+	if !sameStringSlice(foo, []string{"@a", "@c"}) {
+		t.Errorf("not expected owners for foo.php %v", foo)
+	}
+}
+
+func TestReplaceOwner(t *testing.T) {
+	co, err := BuildFromFile("fixtures/testCODEOWNERS_Example_Wildcard")
+	if err != nil {
+		t.Fatalf("expecting a non error")
+		t.FailNow()
+	}
+
+	//base
+	foo := co.FindOwners("app/vendor/hooli/middle_out.go")
+	if !sameStringSlice(foo, []string{"@a", "@c", "@richard", "@devs"}) {
+		t.Errorf("not expected owners for foo.php %v", foo)
+	}
+
+	co.ReplaceOwner("@devs", "@eng")
+	foo = co.FindOwners("app/vendor/hooli/middle_out.go")
+	if !sameStringSlice(foo, []string{"@a", "@c", "@richard", "@eng"}) {
+		t.Errorf("not expected owners for foo.php %v", foo)
+	}
+
+	co.ReplaceOwner("@richard", "@scott")
+	foo = co.FindOwners("app/vendor/hooli/middle_out.go")
+	if !sameStringSlice(foo, []string{"@a", "@c", "@scott", "@eng"}) {
+		t.Errorf("not expected owners for foo.php %v", foo)
+	}
+}
+
 func contains(str string, arr ...string) bool {
 	for _, a := range arr {
 		if a == str {

@@ -133,6 +133,58 @@ func (t *CodeOwners) AddOwner(path string, owners ...string) {
 	})
 }
 
+func (t *CodeOwners) RemovePath(path string) {
+	t.Put(path, nil)
+}
+
+func (t *CodeOwners) RemoveOwner(owner string) {
+	walker := func(key string, value interface{}) error {
+		if value == nil {
+			return nil
+		}
+		n, ok := value.(*node)
+		if !ok {
+			log.Fatal("Structure of the code owner index is malformed")
+		}
+		for _, en := range n.entries {
+			newOwners := en.owners
+			for i, o := range en.owners {
+				if o == owner {
+					RemoveIndex(newOwners, i)
+				}
+			}
+			en.owners = newOwners
+		}
+
+		return nil
+	}
+	t.Walk(walker)
+}
+
+func (t *CodeOwners) ReplaceOwner(oldOwner, newOwner string) {
+	walker := func(key string, value interface{}) error {
+		if value == nil {
+			return nil
+		}
+		n, ok := value.(*node)
+		if !ok {
+			log.Fatal("Structure of the code owner index is malformed")
+		}
+		for _, en := range n.entries {
+			newOwners := en.owners
+			for i, o := range en.owners {
+				if o == oldOwner {
+					newOwners[i] = newOwner
+				}
+			}
+			en.owners = newOwners
+		}
+
+		return nil
+	}
+	t.Walk(walker)
+}
+
 // FindOwners ...
 func (t *CodeOwners) FindOwners(path string) []string {
 	owners := []string{}
@@ -215,4 +267,8 @@ func removeDuplicatesUnordered(elements []string) []string {
 		result = append(result, key)
 	}
 	return result
+}
+
+func RemoveIndex(s []string, index int) []string {
+	return append(s[:index], s[index+1:]...)
 }
