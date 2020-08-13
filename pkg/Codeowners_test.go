@@ -1,6 +1,10 @@
 package codeowners
 
 import (
+	"bytes"
+	"io/ioutil"
+	"log"
+	"os"
 	"reflect"
 	"testing"
 )
@@ -294,7 +298,7 @@ func TestRemoveOwner(t *testing.T) {
 	}
 
 	foo = co.FindOwners("/app/vendor/hooli/middle_out.go")
-	if sameStringSlice(foo, []string{"@devs"}) {
+	if !sameStringSlice(foo, []string{"@devs"}) {
 		t.Errorf("not expected owners for foo.php")
 	}
 }
@@ -357,7 +361,58 @@ func TestPrint(t *testing.T) {
 		t.Fatalf("expecting a non error")
 		t.FailNow()
 	}
-	co.Print()
+	var b bytes.Buffer
+	co.Serialize(&b)
+	expected := `* @devs
+*.js @frontend
+README @legal
+app/ @a
+app/lib/ @b
+app/lib/network/ @c
+app/vendor/* @b
+app/vendor/hooli/ @c
+app/vendor/hooli/index.js @mike
+app/vendor/hooli/index.react.js @mike
+app/vendor/hooli/middle_out.go @richard`
+	output := b.String()
+	if expected != output {
+		t.Fatalf(output)
+		t.FailNow()
+	}
+}
+
+func TestSave(t *testing.T) {
+	co, err := BuildFromFile("fixtures/testCODEOWNERS_Example_Wildcard")
+	if err != nil {
+		t.Fatalf("expecting a non error")
+		t.FailNow()
+	}
+
+	tmpFile, err := ioutil.TempFile(os.TempDir(), "codeowners-")
+	if err != nil {
+		log.Fatal("Cannot create temporary file", err)
+	}
+
+	co.SaveToFile(tmpFile)
+	dat, _ := ioutil.ReadFile(tmpFile.Name())
+
+	expected := `* @devs
+*.js @frontend
+README @legal
+app/ @a
+app/lib/ @b
+app/lib/network/ @c
+app/vendor/* @b
+app/vendor/hooli/ @c
+app/vendor/hooli/index.js @mike
+app/vendor/hooli/index.react.js @mike
+app/vendor/hooli/middle_out.go @richard`
+	output := string(dat)
+	if expected != output {
+		t.Fatalf(output)
+		t.FailNow()
+	}
+
 }
 
 func contains(str string, arr ...string) bool {

@@ -5,6 +5,7 @@ import (
 	"bytes"
 	"fmt"
 	"io/ioutil"
+	"os"
 	"path/filepath"
 	"sort"
 
@@ -237,11 +238,18 @@ func (t *CodeOwners) FindOwners(path string) []string {
 
 func (t *CodeOwners) Print() {
 	var b bytes.Buffer
-	t.serialize(&b)
+	t.Serialize(&b)
 	fmt.Print(b.String())
 }
 
-func (t *CodeOwners) serialize(b *bytes.Buffer) {
+func (co *CodeOwners) SaveToFile(f *os.File) {
+	var b bytes.Buffer
+	co.Serialize(&b)
+	f.WriteString(b.String())
+	f.Sync()
+}
+
+func (t *CodeOwners) Serialize(b *bytes.Buffer) {
 	toSort := []string{}
 	walker := func(key string, value interface{}) error {
 		if value == nil {
