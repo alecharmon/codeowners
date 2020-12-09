@@ -26,10 +26,12 @@ type CodeOwners struct {
 }
 
 // BuildEntries ...
-func BuildEntries(input []byte, includeComments bool) ([]*Entry, error) {
+func BuildEntries(input []byte, includeComments bool) ([]*Entry, []error) {
 	entries := []*Entry{}
 	reader := bufio.NewReader(bytes.NewReader(input))
 
+	index := 1
+	errors := []error{}
 	for {
 		line, _, err := reader.ReadLine()
 
@@ -43,23 +45,26 @@ func BuildEntries(input []byte, includeComments bool) ([]*Entry, error) {
 		parser := NewParser(strings.NewReader(string(line)))
 		entry, err := parser.Parse()
 		if err != nil {
-			panic(err)
-		}
-
-		if (entry.suffix == PathSufix(None)) && !includeComments {
+			errors = append(errors, fmt.Errorf("Syntax Error On Line %d: %s", index, err.Error()))
+			continue
+		} else if (entry.suffix == PathSufix(None)) && !includeComments {
 			continue
 		}
+		index++
 
 		entries = append(entries, entry)
+	}
+	if len(errors) > 0 {
+		return entries, errors
 	}
 	return entries, nil
 }
 
 // BuildEntriesFromFile from an file path, absolute or relative, builds the entries for the CODEOWNERS file
-func BuildEntriesFromFile(filePath string, includeComments bool) ([]*Entry, error) {
+func BuildEntriesFromFile(filePath string, includeComments bool) ([]*Entry, []error) {
 	bytes, err := ioutil.ReadFile(filePath)
 	if err != nil {
-		return nil, err
+		return nil, []error{err}
 	}
 	return BuildEntries(bytes, includeComments)
 }
@@ -71,21 +76,29 @@ func newNode() *node {
 }
 
 // BuildFromFile from an file path, absolute or relative, builds the index for the CODEOWNERS file
-func BuildFromFile(filePath string) (*CodeOwners, error) {
-	entries, err := BuildEntriesFromFile(filePath, false)
-	if err != nil {
-		return nil, err
+func BuildFromFile(filePath string) (*CodeOwners, []error) {
+	entries, errors := BuildEntriesFromFile(filePath, false)
+	if errors != nil {
+		return nil, errors
 	}
-	return createIndexFromEntries(entries)
+	index, err := createIndexFromEntries(entries)
+	if err != nil {
+		return nil, []error{err}
+	}
+	return index, nil
 }
 
 // BuildFromFile from an file path, absolute or relative, builds the index for the CODEOWNERS file
-func BuildIndex(input []byte) (*CodeOwners, error) {
-	entries, err := BuildEntries(input, false)
-	if err != nil {
-		return nil, err
+func BuildIndex(input []byte) (*CodeOwners, []error) {
+	entries, errors := BuildEntries(input, false)
+	if errors != nil {
+		return nil, errors
 	}
-	return createIndexFromEntries(entries)
+	index, err := createIndexFromEntries(entries)
+	if err != nil {
+		return nil, []error{err}
+	}
+	return index, nil
 }
 
 // createIndexFromEntries ...

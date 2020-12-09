@@ -36,12 +36,6 @@ func TestBuildEntriesFromFile(t *testing.T) {
 			owners:  []string{"@multiple", "@code", "@owners"},
 		},
 		&Entry{
-			path:    "LICENSE",
-			comment: "",
-			suffix:  PathSufix(Absolute),
-			owners:  []string{"@legal", "janedoe@gitlab.com"},
-		},
-		&Entry{
 			path:    "README",
 			comment: "",
 			suffix:  PathSufix(Absolute),
@@ -73,10 +67,15 @@ func TestBuildEntriesFromFile(t *testing.T) {
 		},
 	}
 
-	entries, err := BuildEntriesFromFile("fixtures/testCODEOWNERS_Rules", false)
+	entries, errors := BuildEntriesFromFile("fixtures/testCODEOWNERS_Rules", false)
 
-	if err != nil {
-		t.Fatalf("expecting a non error")
+	if errors == nil {
+		t.Fatalf("expecting a errors")
+		t.FailNow()
+	}
+
+	if errors[0].Error() != "Syntax Error On Line 5: (this_does_not_match) is an invalid owner" {
+		t.Fatalf("Expected error \n%s but got \n%s", "Error On Line 5: (this_does_not_match) is an invalid owner", errors[0].Error())
 		t.FailNow()
 	}
 	if len(entries) != len(outputs) {
@@ -384,12 +383,12 @@ app/vendor/hooli/middle_out.go @richard`
 func TestSave(t *testing.T) {
 	co, err := BuildFromFile("fixtures/testCODEOWNERS_Example_Wildcard")
 	if err != nil {
-		t.Fatalf("expecting a non error")
+		t.Fatal("expecting a non error", err)
 		t.FailNow()
 	}
 
-	tmpFile, err := ioutil.TempFile(os.TempDir(), "codeowners-")
-	if err != nil {
+	tmpFile, err2 := ioutil.TempFile(os.TempDir(), "codeowners-")
+	if err2 != nil {
 		log.Fatal("Cannot create temporary file", err)
 	}
 

@@ -6,7 +6,7 @@ import (
 	"testing"
 )
 
-func TestParser(t *testing.T) {
+func TestSimpleParser(t *testing.T) {
 	testcases := []struct {
 		input  string
 		output *Entry
